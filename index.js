@@ -1,9 +1,9 @@
 const express=require('express');
 const app=express();
 const port=8000;
-
-//  hey i have changed the code here 
-
+ 
+//Use express router
+app.use('/', require('./routes'));
 
 app.listen(port, function(err){
     if(err){
