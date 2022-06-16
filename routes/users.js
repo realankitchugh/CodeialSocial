@@ -4,7 +4,7 @@ const router=express.Router();
 const userController=require('../controllers/users_controller');
 router.get('/', userController.profile);
 router.use('/posts', require('./posts'));
-router.use('/profile', require('./profile'));
+router.get('/profile', userController.userProfile);
 router.get('/sign-up', userController.signup);
 router.get('/sign-in', userController.signin);
 router.post('/create', userController.create); 
