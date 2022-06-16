@@ -4,10 +4,13 @@ module.exports.profile=function(req, res){
 }
 //render the sign up page
 module.exports.signup = function(req, res){
+    // User.findByIdAndDelete('62aa0c05517ce70c3ea5c8dd', function(err){
+//         if(err){console.log('error', err); return;}
+//     });
     res.render('sign_up', {
         title: "Sign Up Page"
     });
-}
+ }
 //render the sign in page
 module.exports.signin = function(req, res){
     res.render('sign_in', {
@@ -49,7 +52,7 @@ module.exports.create = function(req, res){
 
         if (!user){
             User.create(req.body, function(err, user){
-                if(err){console.log('error in creating user while signing up',err); return}
+                if(err){console.log('error in creating user while signing up',err); return;}
 
                 return res.redirect('/users/sign-in');
             });
@@ -63,5 +66,29 @@ module.exports.create = function(req, res){
 
 //Sign in and create the session for the user
 module.exports.createSession = function(req, res){
+    //find the user
+    User.findOne({emial: req.body.email}, function(err, user){
+        if(err){console.log('error in finding user in signing in'); return;}
+        
+        //handle user found
+        if(user){
+        //handle mismatching of passwords
+            if(user.password != req.body.password){
+                return res.redirect('back');
+            }
+        //handle session creation
+        res.cookie('user_id', user.id);
+        return res.redirect('/users/profile');
+        }
+        else{
+            //handle user not found
+            return res.redirect('back');
+        }
+    });
+    
 
+
+    
+
+    //handle user not found
 }
