@@ -1,5 +1,5 @@
 const User=require('../models/user');
-module.exports.profile=function(req, res){
+module.exports.userHome=function(req, res){
     res.send("<h1> Users </h1>");
 }
 //render the sign up page
@@ -14,30 +14,13 @@ module.exports.signin = function(req, res){
         title: "Sign-in Page"
     });
 } 
-//Get the sign up data from the user form
-// module.exports.create = function(req, res){
-//     if(req.body.password != req.body.confirm_password){
-//         return res.redirect('/');
-//     }
 
-//     User.findOne({email: req.body.email}, function(err, user){
-//         if(err){console.log('error'); return;}
-//         if(!user){
-//             User.create(req.body, function(err, user){
-//                 if(err){
-//                     console.log('error');
-//                     return;
-//                 }
-//                 return res.redirect('/users/sign-in');
-//             });
-//         }
-//         else{
-//             return res.redirect('back');
-//         }
+module.exports.userProfile=function(req, res){
+    return res.render('profile', {
+        title: "User Profile MF"
+    });
+}
 
-//     });
-
-// }
 module.exports.create = function(req, res){
     if (req.body.password != req.body.confirm_password){
         // alert("Passwords dont match");
@@ -63,5 +46,5 @@ module.exports.create = function(req, res){
 
 //Sign in and create the session for the user
 module.exports.createSession = function(req, res){
-
+    return res.redirect('/');
 }
