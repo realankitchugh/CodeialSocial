@@ -4,12 +4,16 @@ const app=express();
 const port=8000;
 const expressLayouts=require('express-ejs-layouts');
 const db=require('./config/mongoose');
+const mongoose=require('mongoose');
 
 //For Session cookie
 const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
-
+const MongoStore = require('connect-mongo');
+const clientP=mongoose.connect('mongodb://localhost/codeial_dev', 
+    { useNewUrlParser: true, useUnifiedTopology: true }
+).then(m => m.connection.getClient())
 
 app.use(express.urlencoded());
 app.use(cookieParser());
@@ -25,7 +29,7 @@ app.set('layout extractScripts', true);
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-
+//mongoStore is used to store the session cookie in the DB
 app.use(session({
     name: "codeial",
     //change secret before deployment
@@ -34,11 +38,30 @@ app.use(session({
     resave: false,
     cookie: {
         maxAge: (1000*60*100)
-    }
-
+    },
+    store: MongoStore.create(
+        {
+            clientPromise: clientP,
+            autoRemove: 'disabled'
+        }, 
+        function(err){
+            console.log(err || 'connect-mongodb setup OK');
+        }
+    )
+    // store: new MongoStore(
+    //     {
+    //         mongooseConnection: db,
+    //         autoRemove: 'disabled'
+    //     }, 
+    //     function(err){
+    //         console.log(err || 'connect-mongodb setup OK');
+    //     }
+    // )
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(passport.setAuthenticatedUser);
 
 app.use('/', require('./routes'));
 app.listen(port, function(err){
