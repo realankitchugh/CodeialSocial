@@ -3,19 +3,43 @@
     <ul style="list-style: none; justify-content: flex-end; display: flex;">
         <% if(locals.user){ %>
             <li>
-                <a href="/users/profile"><%= user.name %></a>
+                <div>
+                    <a href="/users/profile"><%= user.name %></a>
+                </div>
             </li>
             <li>
-                <a href="/users/sign-out">Sign Out</a>
+                <div>
+                    <a href="/users/sign-out">Sign Out</a>
+                </div>
             </li>
         <% }else{ %>
+            <% if(title == "Sign Up Page"){ %>
+                <li>
+                    <div>
+                        <a href="/users/sign-in">Sign-in</a>
+                    </div>
+                </li>
+            <% }else if(title == "Sign-in Page"){ %>
+            
             <li>
-                <a href="/users/sign-in">Sign In</a>
+                <div>
+                    <a href="/users/sign-up">Sign-up</a>        
+                </div>
             </li>
-            <li>
-                <a href="/users/sign-up">Sign Up</a>
-            </li>
+            <% }else{ %>
+                <li>
+                    <div>
+                        <a href="/users/sign-in">Sign-in</a>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a href="/users/sign-up">Sign-up</a>        
+                    </div>
+                </li>
+                <% } %>
         <% } %>
     </ul>
+    
 
 </header>

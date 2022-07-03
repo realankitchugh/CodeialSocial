@@ -15,6 +15,17 @@ const clientP=mongoose.connect('mongodb://localhost/codeial_dev',
     { useNewUrlParser: true, useUnifiedTopology: true }
 ).then(m => m.connection.getClient())
 
+const sassMiddleware=require('node-sass-middleware'); 
+
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
+
+
 app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(express.static('./assets'));

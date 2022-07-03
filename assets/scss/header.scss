@@ -1,0 +1,31 @@
+header{
+    background-color: #4267B2;
+    height: 4rem;
+    ul li {
+        justify-content: center;
+        align-items: center !important;
+        display: flex;
+
+        div{
+            margin-top: 1rem;
+            align-self: center;
+            background-color: white;
+            height: 2rem;
+            width: 4rem;
+            display: flex;
+            border-radius: 10%;
+            justify-content: center;
+            align-items: center;
+            margin: 0px 5px 0px;
+            a{
+                text-decoration: none;
+                color: black;
+                font-family: sans-serif;
+            }
+            
+        }
+        // &:hover{
+        //     background-color: rgb(199, 192, 192);
+        // }
+    }
+}
