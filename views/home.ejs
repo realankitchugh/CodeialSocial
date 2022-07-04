@@ -3,8 +3,20 @@
 
 <section id="feed-posts">
         <h4>Posts</h4>
-        <form action="" id="new-post-form" method="post">
+        <form action="/posts/create" id="new-post-form" method="post">
                 <textarea name="content" id="" cols="30" rows="3"></textarea>
                 <input type="submit" value="Post" name="" id="">
         </form>
+        <div id="post-list-container">
+                <ul>
+                        <% for(let post of posts){ %>
+                        <li>
+                            <%= post.content %>  
+                            <small>
+                                <%= post.user.name %>
+                            </small>  
+                        </li>
+                        <% } %>
+                </ul>
+        </div>
 </section>
