@@ -5,18 +5,18 @@ const port=8000;
 const expressLayouts=require('express-ejs-layouts');
 const db=require('./config/mongoose');
 const mongoose=require('mongoose');
-
 //For Session cookie
 const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
+const customMware=require('./config/middleware');
 const MongoStore = require('connect-mongo');
 const clientP=mongoose.connect('mongodb://localhost/codeial_dev', 
     { useNewUrlParser: true, useUnifiedTopology: true }
 ).then(m => m.connection.getClient())
 
 const sassMiddleware=require('node-sass-middleware'); 
-
+const flash = require('connect-flash');
 app.use(sassMiddleware({
     src: './assets/scss',
     dest: './assets/css',
@@ -28,13 +28,17 @@ app.use(sassMiddleware({
 
 app.use(express.urlencoded());
 app.use(cookieParser());
+
+// make the uploads path visible
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 app.use(express.static('./assets'));
 app.use(expressLayouts);
 //extract styles and scripts from sub pages into the layout
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
-//Use express router
+//
 
 //Set up view engine
 app.set('view engine', 'ejs');
@@ -73,7 +77,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
-
+app.use(flash());
+app.use(customMware.setFlash);
 app.use('/', require('./routes'));
 app.listen(port, function(err){
     if(err){

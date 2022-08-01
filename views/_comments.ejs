@@ -1,0 +1,22 @@
+<li>
+    <p>
+        <% if(locals.user && (locals.user.id == post.user.id)){ %>
+            <small>
+                <a href="/comments/destroy/?comment_id=<%= comment.id %>&post_id=<%= post.user.id %>"><i class="fa fa-trash"></i></a>
+            </small>
+        <% } else {%>
+        <% if(locals.user && (locals.user.id == comment.user.id)){ %>
+            <small>
+                <a href="/comments/destroy/<%= comment.id %>"><i class="fa fa-trash"></i></a>
+            </small>
+        <% } %>
+        <% } %>
+
+        <%= comment.content %>
+        <br>
+        <small>
+            <%= comment.user.name %>
+        </small>
+    </p>    
+
+</li>

@@ -12,10 +12,10 @@ const commentSchema=new mongoose.Schema({
     },
     post: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
+        ref: 'post'
     }
 }, {
     timestamps: true
 });
-const Comment=mongoose.model('Comment', commentSchema);
+const Comment=mongoose.model('comment', commentSchema);
 module.exports = Comment;
