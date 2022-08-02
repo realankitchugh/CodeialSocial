@@ -7,7 +7,7 @@ module.exports.create = async function(req, res){
             user: req.user
         });
         if(req.xhr){
-            req.flash('success', "Post Created!!!");
+            // req.flash('success', "Post Created!!!");
             return res.status(200).json({
                 data: {
                     post: post
@@ -16,7 +16,7 @@ module.exports.create = async function(req, res){
             });
         }
 
-        // req.flash('success', "Post added");
+        req.flash('success', "Post added");
         return res.redirect('back');
     }catch(err){
         console.log('Error', err);
